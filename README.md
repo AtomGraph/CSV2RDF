@@ -34,7 +34,7 @@ Example
 CSV data in `parking-facilities.csv`:
     
     postDistrict,roadCode,houseNumber,name,FID,long,lat,address,postcode,parkingSpace,owner,parkingType,information
-1304 København K,24,5,Adelgade 5 p_hus.0,p_hus.0,12.58228733,55.68268042,Adelgade 5,1304,92,Privat,P-Kælder,"Adelgade 5-7, Q-park."
+    1304 København K,24,5,Adelgade 5 p_hus.0,p_hus.0,12.58228733,55.68268042,Adelgade 5,1304,92,Privat,P-Kælder,"Adelgade 5-7, Q-park."
 
 `CONSTRUCT` query in `parking-facilities.rq`:
 
