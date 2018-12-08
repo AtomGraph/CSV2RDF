@@ -2,7 +2,7 @@
 Streaming, transforming CSV to RDF converter
 
 Reads CSV/TSV data as generic CSV/RDF, transforms each row using SPARQL `CONSTRUCT` or `DESCRIBE`, and streams the output triples.
-The generic CSV/RDF format is based on minimal mode of [Generating RDF from Tabular Data on the Web](https://www.w3.org/TR/2015/REC-csv2rdf-20151217/#dfn-minimal-mode)
+The generic CSV/RDF format is based on the minimal mode of [Generating RDF from Tabular Data on the Web](https://www.w3.org/TR/2015/REC-csv2rdf-20151217/#dfn-minimal-mode).
 
 Such transformation-based approach enables:
 * building resource URIs on the fly

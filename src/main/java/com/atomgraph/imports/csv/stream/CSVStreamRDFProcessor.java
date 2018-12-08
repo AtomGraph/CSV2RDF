@@ -16,7 +16,7 @@
  */
 package com.atomgraph.imports.csv.stream;
 
-import com.atomgraph.imports.csv.QueryTransformer;
+import com.atomgraph.imports.csv.ModelTransformer;
 import com.univocity.parsers.common.ParsingContext;
 import com.univocity.parsers.common.processor.RowProcessor;
 import java.util.function.BiFunction;
@@ -39,7 +39,7 @@ public class CSVStreamRDFProcessor implements RowProcessor
 
     private final StreamRDF stream;
     private final String base;
-    private final BiFunction<Query, Model, Model> function = new QueryTransformer();
+    private final BiFunction<Query, Model, Model> function = new ModelTransformer();
     private final Query query;
     private int subjectCount, tripleCount;
     

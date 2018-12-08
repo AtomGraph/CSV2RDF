@@ -27,7 +27,7 @@ import org.apache.jena.rdf.model.Model;
  * 
  * @author Martynas Jusevičius <martynas@atomgraph.com>
  */
-public class QueryTransformer implements BiFunction<Query, Model, Model>
+public class ModelTransformer implements BiFunction<Query, Model, Model>
 {
     
     @Override
