@@ -46,27 +46,27 @@ CSV data in `parking-facilities.csv`:
     CONSTRUCT
     {
         ?parking a schema:ParkingFacility ;
-        geo:lat ?lat ;
-        geo:long ?long ;
-        schema:name ?name ;
-        schema:streetAddress ?address ;
-        schema:postalCode ?postcode ;
-        schema:maximumAttendeeCapacity ?spaces ;
-        schema:additionalProperty ?parkingType ;
-        schema:comment ?information ;
-        schema:identifier ?id .
+            geo:lat ?lat ;
+            geo:long ?long ;
+            schema:name ?name ;
+            schema:streetAddress ?address ;
+            schema:postalCode ?postcode ;
+            schema:maximumAttendeeCapacity ?spaces ;
+            schema:additionalProperty ?parkingType ;
+            schema:comment ?information ;
+            schema:identifier ?id .
     }
     WHERE
     {
         ?parkingRow <#FID> ?id ;
-        <#name> ?name ;
-        <#address> ?address ;
-        <#lat> ?lat_string ;
-        <#postcode> ?postcode ;
-        <#parkingSpace> ?spaces_string ;
-        <#parkingType> ?parkingType ;
-        <#information> ?information ;
-        <#long> ?long_string . 
+            <#name> ?name ;
+            <#address> ?address ;
+            <#lat> ?lat_string ;
+            <#postcode> ?postcode ;
+            <#parkingSpace> ?spaces_string ;
+            <#parkingType> ?parkingType ;
+            <#information> ?information ;
+            <#long> ?long_string . 
 
         BIND(URI(CONCAT(STR(<>), ?id)) AS ?parking) # building URI from base URI and ID
         BIND(xsd:integer(?spaces_string) AS ?spaces)
