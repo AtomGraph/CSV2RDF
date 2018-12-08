@@ -19,7 +19,7 @@ That should produce an executable JAR file `target/csv2rdf-1.0.0-SNAPSHOT-jar-wi
 Usage
 -----
 
-The CSV data is read from `stdin`. The resulting RDF data is written to `stout`.
+The CSV data is read from `stdin`. The resulting RDF data is written to `stdout`.
 
 Parameters:
 1. `baseURI` - the base URI for the data (also set on the query)
