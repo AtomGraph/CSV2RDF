@@ -20,20 +20,18 @@ import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Writer;
 import org.apache.jena.query.Query;
 import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.riot.system.StreamRDFLib;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- *
+ * Reads CSV data from input stream, transforms it into RDF and writes the result.
+ * 
  * @author Martynas Jusevičius <martynas@atomgraph.com>
  */
-public class CSVStreamRDFOutput //implements StreamingOutput
+public class CSVStreamRDFOutput
 {
-
-    private static final Logger log = LoggerFactory.getLogger(CSVStreamRDFOutput.class);
 
     private final String base;
     private final InputStreamReader isr;
@@ -49,10 +47,18 @@ public class CSVStreamRDFOutput //implements StreamingOutput
         this.delimiter = delimiter;
     }
     
-    //@Override
     public void write(OutputStream os)
     {
-        StreamRDF stream = StreamRDFLib.writer(os);
+        write(StreamRDFLib.writer(os));
+    }
+
+    public void write(Writer writer)
+    {
+        write(StreamRDFLib.writer(writer));
+    }
+    
+    public void write(StreamRDF stream)
+    {
         processor = new CSVStreamRDFProcessor(stream, getBase(), getQuery());
         
         CsvParserSettings parserSettings = new CsvParserSettings();
@@ -65,7 +71,7 @@ public class CSVStreamRDFOutput //implements StreamingOutput
         parser.parse(getInputStreamReader());
         stream.finish(); // write the statements into the stream
     }
-
+    
     public InputStreamReader getInputStreamReader()
     {
         return isr;

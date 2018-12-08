@@ -21,25 +21,21 @@ import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.rdf.model.Model;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- *
+ * Transforms an RDF graph using a SPARQL query.
+ * 
  * @author Martynas Jusevičius <martynas@atomgraph.com>
  */
 public class QueryTransformer implements BiFunction<Query, Model, Model>
 {
     
-    private static final Logger log = LoggerFactory.getLogger(QueryTransformer.class);
-
     @Override
     public Model apply(Query construct, Model model)
     {
         // execute CONSTRUCT to map from CSV/RDF to domain RDF vocab
         try (QueryExecution qex = QueryExecutionFactory.create(construct, model))
         {
-            if (log.isDebugEnabled()) log.debug("Transforming Model of size: {}", model.size());
             return qex.execConstruct();
         }
     }

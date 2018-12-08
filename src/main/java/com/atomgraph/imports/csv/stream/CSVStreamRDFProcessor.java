@@ -30,7 +30,8 @@ import org.apache.jena.riot.system.StreamOps;
 import org.apache.jena.riot.system.StreamRDF;
 
 /**
- *
+ * Converts an array of values to generic RDF, transforms it with a query and sends the result triples to stream.
+ * 
  * @author Martynas Jusevičius <martynas@atomgraph.com>
  */
 public class CSVStreamRDFProcessor implements RowProcessor
@@ -46,7 +47,7 @@ public class CSVStreamRDFProcessor implements RowProcessor
     {
         this.stream = stream;
         this.base = base;
-        if (!query.isConstructType()) throw new IllegalArgumentException("Only CONSTRUCT queries can be used for transformation");
+        if (!(query.isConstructType() || query.isDescribeType())) throw new IllegalArgumentException("Only CONSTRUCT and DESCRIBE queries can be used for transformation");
         this.query = query;
     }
     

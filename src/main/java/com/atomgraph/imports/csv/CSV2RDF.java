@@ -20,12 +20,14 @@ import com.atomgraph.imports.csv.stream.CSVStreamRDFOutput;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 
@@ -35,32 +37,46 @@ import org.apache.jena.query.QueryFactory;
  */
 public class CSV2RDF
 {
-
+    private static final char DEFAULT_DELIMITER = ",".charAt(0);
     
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException, URISyntaxException
     {
-        String csvFilename = "C:\\Users\\pumba\\WebRoot\\AtomGraph\\CSV2RDF\\src\\main\\resources\\parking-facilities.csv"; // args[0];
-        String queryFilename = "C:\\Users\\pumba\\WebRoot\\AtomGraph\\CSV2RDF\\src\\main\\resources\\parking-facilities.rq"; // args[1];
-        String baseURI = "http://localhost/";
-        char delimiter = ",".charAt(0);
-        
-        Path queryPath = Paths.get(queryFilename);
-
-        try
+        if (System.in.available() == 0 || args.length < 2 || args.length > 3)
         {
-            byte[] encoded = Files.readAllBytes(queryPath);
-            String queryString = new String(encoded, StandardCharsets.UTF_8);
-            Query query = QueryFactory.create(queryString, baseURI);
-            
-            try (InputStreamReader reader =  new InputStreamReader(new FileInputStream(csvFilename)))
-            {
-                CSVStreamRDFOutput rdfOutput = new CSVStreamRDFOutput(reader, baseURI, query, delimiter);
-                rdfOutput.write(System.out);
-            }
+            System.out.println("CSV input: stdin");
+            System.out.println("Parameters: <baseURI> <queryFile> [<delimiter>]");
+            System.exit(-1);
         }
-        catch (IOException ex)
+
+        URI baseURI = new URI(args[0]);
+        Path queryPath = Paths.get(args[1]);
+        
+        char delimiter = DEFAULT_DELIMITER;
+        if (args.length > 3)
         {
-            Logger.getLogger(CSV2RDF.class.getName()).log(Level.SEVERE, null, ex);
+            String delimiterStr = args[2];
+            if (delimiterStr.length() > 1)
+            {
+                System.out.println("Delimiter must be a single character");
+                System.exit(-1);
+            }
+            delimiter = delimiterStr.charAt(0);
+        }
+        
+        byte[] encoded = Files.readAllBytes(queryPath);
+        String queryString = new String(encoded, StandardCharsets.UTF_8);
+        Query query = QueryFactory.create(queryString, baseURI.toString());
+        if (!(query.isConstructType() || query.isDescribeType()))
+        {
+            System.out.println("Only CONSTRUCT or DESCRIBE queries are supported");
+            System.exit(-1);
+        }
+
+        try (InputStreamReader reader =  new InputStreamReader(System.in))
+        {
+            CSVStreamRDFOutput rdfOutput = new CSVStreamRDFOutput(reader, baseURI.toString(), query, delimiter);
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out)); // needed to write UTF-8 characters
+            rdfOutput.write(out);
         }
     }
     
