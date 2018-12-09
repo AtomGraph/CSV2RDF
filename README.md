@@ -10,8 +10,8 @@ Such transformation-based approach enables:
 * mapping different groups of values to different RDF structures
 
 CSV2RDF differs from [tarql](https://tarql.github.io) in the way how mapping queries use graph patterns in the `WHERE` clause. tarql queries operate on a table of bindings
-(provided as `FROM` or `VALUES`) in which CSV column names become variable names. CSV2RDF generates an intermediary RDF graph for each CSV row (using column names as relative-URI properties)
-that the `WHERE` patterns match against.
+(provided as an implicit `VALUES` block) in which CSV column names become variable names. CSV2RDF generates an intermediary RDF graph for each CSV row (using column names as relative-URI properties)
+that the `WHERE` patterns explicitly match against.
 
 Build
 -----
