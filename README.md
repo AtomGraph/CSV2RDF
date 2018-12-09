@@ -9,6 +9,9 @@ Such transformation-based approach enables:
 * fixing/remapping datatypes
 * mapping different groups of values to different RDF structures
 
+CSV2RDF differs from [tarql](https://tarql.github.io) in the way how mapping queries use graph patterns in the `WHERE` clause. tarql generates implicit graph patterns with CSV column
+names as variable names while CSV2RDF uses explicit graph patterns in the `WHERE` clause with column names as relative-URI properties.
+
 Build
 -----
 
