@@ -17,8 +17,8 @@
 package com.atomgraph.imports.csv;
 
 import com.atomgraph.imports.csv.stream.CSVStreamRDFOutput;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -41,7 +41,9 @@ public class CSV2RDF
     
     public static void main(String[] args) throws IOException, URISyntaxException
     {
-        if (System.in.available() == 0 || args.length < 2 || args.length > 3)
+        InputStream csv = System.in;
+        
+        if (csv.available() == 0 || args.length < 2 || args.length > 3)
         {
             System.out.println("CSV input: stdin");
             System.out.println("Parameters: <baseURI> <queryFile> [<delimiter>]");
@@ -72,7 +74,7 @@ public class CSV2RDF
             System.exit(-1);
         }
 
-        try (InputStreamReader reader =  new InputStreamReader(System.in))
+        try (InputStreamReader reader =  new InputStreamReader(csv, StandardCharsets.UTF_8))
         {
             CSVStreamRDFOutput rdfOutput = new CSVStreamRDFOutput(reader, baseURI.toString(), query, delimiter);
             PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out)); // needed to write UTF-8 characters

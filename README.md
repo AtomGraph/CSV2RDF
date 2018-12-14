@@ -23,7 +23,7 @@ That should produce an executable JAR file `target/csv2rdf-1.0.0-SNAPSHOT-jar-wi
 Usage
 -----
 
-The CSV data is read from `stdin`. The resulting RDF data is written to `stdout`.
+The CSV data is read from `stdin`, UTF-8 encoding is expected. The resulting RDF data is written to `stdout`.
 
 Parameters:
 1. `baseURI` - the base URI for the data (also set on the query)
@@ -80,20 +80,20 @@ CSV data in `parking-facilities.csv`:
 
 Execution from shell:
 
-    cat parking-facilities.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar http://localhost/ parking-facilities.rq > parking-facilities.ttl
+    cat parking-facilities.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://localhost/ parking-facilities.rq > parking-facilities.ttl
 
 Output in `parking-facilities.ttl`:
 
-    <http://localhost/p_hus.0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/ParkingFacility> .
-    <http://localhost/p_hus.0> <http://www.w3.org/2003/01/geo/wgs84_pos#long> "12.58228733"^^<http://www.w3.org/2001/XMLSchema#float> .
-    <http://localhost/p_hus.0> <https://schema.org/identifier> "p_hus.0" .
-    <http://localhost/p_hus.0> <https://schema.org/additionalProperty> "P-Kælder" .
-    <http://localhost/p_hus.0> <https://schema.org/comment> "Adelgade 5-7, Q-park." .
-    <http://localhost/p_hus.0> <https://schema.org/postalCode> "1304" .
-    <http://localhost/p_hus.0> <http://www.w3.org/2003/01/geo/wgs84_pos#lat> "55.68268042"^^<http://www.w3.org/2001/XMLSchema#float> .
-    <http://localhost/p_hus.0> <https://schema.org/streetAddress> "Adelgade 5" .
-    <http://localhost/p_hus.0> <https://schema.org/name> "Adelgade 5 p_hus.0" .
-    <http://localhost/p_hus.0> <https://schema.org/maximumAttendeeCapacity> "92"^^<http://www.w3.org/2001/XMLSchema#integer> .
+    <https://localhost/p_hus.0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/ParkingFacility> .
+    <https://localhost/p_hus.0> <http://www.w3.org/2003/01/geo/wgs84_pos#long> "12.58228733"^^<http://www.w3.org/2001/XMLSchema#float> .
+    <https://localhost/p_hus.0> <https://schema.org/identifier> "p_hus.0" .
+    <https://localhost/p_hus.0> <https://schema.org/additionalProperty> "P-Kælder" .
+    <https://localhost/p_hus.0> <https://schema.org/comment> "Adelgade 5-7, Q-park." .
+    <https://localhost/p_hus.0> <https://schema.org/postalCode> "1304" .
+    <https://localhost/p_hus.0> <http://www.w3.org/2003/01/geo/wgs84_pos#lat> "55.68268042"^^<http://www.w3.org/2001/XMLSchema#float> .
+    <https://localhost/p_hus.0> <https://schema.org/streetAddress> "Adelgade 5" .
+    <https://localhost/p_hus.0> <https://schema.org/name> "Adelgade 5 p_hus.0" .
+    <https://localhost/p_hus.0> <https://schema.org/maximumAttendeeCapacity> "92"^^<http://www.w3.org/2001/XMLSchema#integer> .
 
 Dependencies
 ------------
