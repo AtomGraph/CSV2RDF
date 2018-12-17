@@ -43,10 +43,10 @@ public class CSV2RDF
     {
         InputStream csv = System.in;
         
-        if (csv.available() == 0 || args.length < 2 || args.length > 3)
+        if (csv.available() == 0 || args.length < 2 || args.length > 4)
         {
             System.out.println("CSV input: stdin");
-            System.out.println("Parameters: <baseURI> <queryFile> [<delimiter>]");
+            System.out.println("Parameters: <baseURI> <queryFile> [<delimiter> <maxCharsPerColumn>]");
             System.exit(-1);
         }
 
@@ -54,7 +54,7 @@ public class CSV2RDF
         Path queryPath = Paths.get(args[1]);
         
         char delimiter = DEFAULT_DELIMITER;
-        if (args.length > 3)
+        if (args.length > 2)
         {
             String delimiterStr = args[2];
             if (delimiterStr.length() > 1)
@@ -63,6 +63,22 @@ public class CSV2RDF
                 System.exit(-1);
             }
             delimiter = delimiterStr.charAt(0);
+        }
+        
+        Integer maxCharsPerColumn = null;
+        if (args.length > 3)
+        {
+            String maxCharsPerColumnStr = args[3];
+            
+            try
+            {
+                maxCharsPerColumn = Integer.valueOf(maxCharsPerColumnStr);
+            }
+            catch (NumberFormatException ex)
+            {
+                System.out.println("Cannot parse '" + maxCharsPerColumnStr + "' as an integer");
+                System.exit(-1);
+            }
         }
         
         byte[] encoded = Files.readAllBytes(queryPath);
@@ -76,7 +92,7 @@ public class CSV2RDF
 
         try (InputStreamReader reader =  new InputStreamReader(csv, StandardCharsets.UTF_8))
         {
-            CSVStreamRDFOutput rdfOutput = new CSVStreamRDFOutput(reader, baseURI.toString(), query, delimiter);
+            CSVStreamRDFOutput rdfOutput = new CSVStreamRDFOutput(reader, baseURI.toString(), query, delimiter, maxCharsPerColumn);
             PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out)); // needed to write UTF-8 characters
             rdfOutput.write(out);
         }

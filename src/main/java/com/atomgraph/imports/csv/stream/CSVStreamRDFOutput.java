@@ -37,14 +37,16 @@ public class CSVStreamRDFOutput
     private final InputStreamReader isr;
     private final Query query;
     private final char delimiter;
+    private final Integer maxCharsPerColumn;
     private CSVStreamRDFProcessor processor;
     
-    public CSVStreamRDFOutput(InputStreamReader csv, String base, Query query, char delimiter)
+    public CSVStreamRDFOutput(InputStreamReader csv, String base, Query query, char delimiter, Integer maxCharsPerColumn)
     {
         this.base = base;
         this.isr = csv;
         this.query = query;
         this.delimiter = delimiter;
+        this.maxCharsPerColumn = maxCharsPerColumn;
     }
     
     public void write(OutputStream os)
@@ -66,6 +68,7 @@ public class CSVStreamRDFOutput
         parserSettings.setProcessor(processor);
         parserSettings.setHeaderExtractionEnabled(true);
         parserSettings.getFormat().setDelimiter(getDelimiter());
+        if (maxCharsPerColumn != null) parserSettings.setMaxCharsPerColumn(maxCharsPerColumn);
 
         CsvParser parser = new CsvParser(parserSettings);
         parser.parse(getInputStreamReader());
@@ -90,6 +93,11 @@ public class CSVStreamRDFOutput
     public char getDelimiter()
     {
         return delimiter;
+    }
+    
+    public int getMaxCharsPerColumn()
+    {
+        return maxCharsPerColumn;
     }
     
     public CSVStreamRDFProcessor getCSVStreamRDFProcessor()
