@@ -28,8 +28,10 @@ The CSV data is read from `stdin`, UTF-8 encoding is expected. The resulting RDF
 Parameters:
 1. `baseURI` - the base URI for the data (also becomes the `BASE` URI of the SPARQL query)
 2. `queryFile` - a text file with SPARQL 1.1 [`CONSTRUCT`](https://www.w3.org/TR/sparql11-query/#construct) or [`DESCRIBE`](https://www.w3.org/TR/sparql11-query/#describe) query string
-3. `delimiter` - optional value delimiter character, by default `,`
+3. `delimiter` - optional value delimiter character, by default `,`.
 4. `maxCharsPerColumn` - optional max characters per column value, by default 4096
+
+_Note that delimiters might have a [special meaning](https://www.tldp.org/LDP/abs/html/special-chars.html) in shell._ Therefore, always enclose them in single quotes, e.g. `';'` when executing CSV2RDF from shell.
 
 If you want to retrieve the raw CSV/RDF output, use the [identity transform](https://en.wikipedia.org/wiki/Identity_transform) query `CONSTRUCT WHERE { ?s ?p ?o }`.
 
