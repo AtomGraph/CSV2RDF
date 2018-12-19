@@ -101,7 +101,7 @@ Output in `parking-facilities.ttl`:
 Query examples
 --------------
 
-More mapping query examples can be found under [LinkedDataHub](../LinkedDataHub) [`city-graph`](../LinkedDataHub/tree/master/apps/demo/city-graph/queries) demo app.
+More mapping query examples can be found under [LinkedDataHub](../../../LinkedDataHub) [`city-graph`](../../../LinkedDataHub/tree/master/apps/demo/city-graph/queries) demo app.
 
 Dependencies
 ------------
