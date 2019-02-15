@@ -98,6 +98,11 @@ Output in `parking-facilities.ttl`:
     <https://localhost/p_hus.0> <https://schema.org/name> "Adelgade 5 p_hus.0" .
     <https://localhost/p_hus.0> <https://schema.org/maximumAttendeeCapacity> "92"^^<http://www.w3.org/2001/XMLSchema#integer> .
 
+Query examples
+--------------
+
+More mapping query examples can be found under [LinkedDataHub](../../../LinkedDataHub) [`city-graph`](../../../LinkedDataHub/tree/master/apps/demo/city-graph/queries) demo app.
+
 Performance
 -----------
 
