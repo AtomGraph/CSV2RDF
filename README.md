@@ -101,7 +101,7 @@ Output in `parking-facilities.ttl`:
 Performance
 -----------
 
-Largest dataset tested so far: 2.8 GB / 3709725 rows of CSV to 21.7 GB /  triples in 30 minutes. Hardware: x64 Windows 10 PC with Intel Core i5-7200U 2.5 GHz CPU and 16 GB RAM.
+Largest dataset tested so far: 2.8 GB / 3709725 rows of CSV to 21.7 GB / 151348939 triples in 30 minutes. Hardware: x64 Windows 10 PC with Intel Core i5-7200U 2.5 GHz CPU and 16 GB RAM.
 
 Dependencies
 ------------
