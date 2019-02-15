@@ -98,6 +98,11 @@ Output in `parking-facilities.ttl`:
     <https://localhost/p_hus.0> <https://schema.org/name> "Adelgade 5 p_hus.0" .
     <https://localhost/p_hus.0> <https://schema.org/maximumAttendeeCapacity> "92"^^<http://www.w3.org/2001/XMLSchema#integer> .
 
+Performance
+-----------
+
+Largest dataset tested so far: 2.8 GB / 3709725 rows of CSV to 21.7 GB /  triples in 30 minutes. Hardware: x64 Windows 10 PC with Intel Core i5-7200U 2.5 GHz CPU and 16 GB RAM.
+
 Dependencies
 ------------
 
