@@ -14,9 +14,9 @@
  *  limitations under the License.
  *
  */
-package com.atomgraph.imports.csv.stream;
+package com.atomgraph.etl.csv.stream;
 
-import com.atomgraph.imports.csv.ModelTransformer;
+import com.atomgraph.etl.csv.ModelTransformer;
 import com.univocity.parsers.common.ParsingContext;
 import com.univocity.parsers.common.processor.RowProcessor;
 import java.util.function.BiFunction;
