@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package com.atomgraph.imports.csv;
+package com.atomgraph.etl.csv;
 
 import java.util.function.BiFunction;
 import org.apache.jena.query.Query;

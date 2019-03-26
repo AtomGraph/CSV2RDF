@@ -14,14 +14,15 @@
  *  limitations under the License.
  *
  */
-package com.atomgraph.imports.csv;
+package com.atomgraph.etl.csv;
 
-import com.atomgraph.imports.csv.stream.CSVStreamRDFOutput;
+import com.atomgraph.etl.csv.stream.CSVStreamRDFOutput;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +33,8 @@ import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 
 /**
- *
+ * Main entry point to the transformation.
+ * 
  * @author Martynas Jusevičius <martynas@atomgraph.com>
  */
 public class CSV2RDF
@@ -93,7 +95,7 @@ public class CSV2RDF
         try (InputStreamReader reader =  new InputStreamReader(csv, StandardCharsets.UTF_8))
         {
             CSVStreamRDFOutput rdfOutput = new CSVStreamRDFOutput(reader, baseURI.toString(), query, delimiter, maxCharsPerColumn);
-            PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out)); // needed to write UTF-8 characters
+            Writer out = new BufferedWriter(new OutputStreamWriter(System.out)); // needed to write UTF-8 characters
             rdfOutput.write(out);
         }
     }

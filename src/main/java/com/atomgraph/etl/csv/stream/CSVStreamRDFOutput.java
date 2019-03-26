@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package com.atomgraph.imports.csv.stream;
+package com.atomgraph.etl.csv.stream;
 
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
