@@ -49,6 +49,7 @@ public class CSV2RDF
         {
             System.out.println("CSV input: stdin");
             System.out.println("Parameters: <baseURI> <queryFile> [<delimiter> <maxCharsPerColumn>]");
+            System.out.println("Example: cat sample.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://localhost/ mapping.rq > sample.ttl");
             System.exit(-1);
         }
 
