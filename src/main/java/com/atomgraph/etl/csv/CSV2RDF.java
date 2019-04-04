@@ -50,7 +50,7 @@ public class CSV2RDF
             System.out.println("CSV input: stdin");
             System.out.println("Parameters: <baseURI> <queryFile> [<delimiter> <maxCharsPerColumn>]");
             System.out.println("Example: cat sample.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://localhost/ mapping.rq > sample.ttl");
-            System.exit(-1);
+            System.exit(1);
         }
 
         URI baseURI = new URI(args[0]);
@@ -63,7 +63,7 @@ public class CSV2RDF
             if (delimiterStr.length() > 1)
             {
                 System.out.println("Delimiter must be a single character");
-                System.exit(-1);
+                System.exit(1);
             }
             delimiter = delimiterStr.charAt(0);
         }
@@ -80,7 +80,7 @@ public class CSV2RDF
             catch (NumberFormatException ex)
             {
                 System.out.println("Cannot parse '" + maxCharsPerColumnStr + "' as an integer");
-                System.exit(-1);
+                System.exit(1);
             }
         }
         
@@ -90,7 +90,7 @@ public class CSV2RDF
         if (!(query.isConstructType() || query.isDescribeType()))
         {
             System.out.println("Only CONSTRUCT or DESCRIBE queries are supported");
-            System.exit(-1);
+            System.exit(1);
         }
 
         try (InputStreamReader reader =  new InputStreamReader(csv, StandardCharsets.UTF_8))
