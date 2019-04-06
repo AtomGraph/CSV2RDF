@@ -18,8 +18,8 @@ package com.atomgraph.etl.csv.stream;
 
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.io.Writer;
 import org.apache.jena.query.Query;
 import org.apache.jena.riot.system.StreamRDF;
@@ -34,16 +34,16 @@ public class CSVStreamRDFOutput
 {
 
     private final String base;
-    private final InputStreamReader isr;
+    private final Reader reader;
     private final Query query;
     private final char delimiter;
     private final Integer maxCharsPerColumn;
     private CSVStreamRDFProcessor processor;
     
-    public CSVStreamRDFOutput(InputStreamReader csv, String base, Query query, char delimiter, Integer maxCharsPerColumn)
+    public CSVStreamRDFOutput(Reader reader, String base, Query query, char delimiter, Integer maxCharsPerColumn)
     {
         this.base = base;
-        this.isr = csv;
+        this.reader = reader;
         this.query = query;
         this.delimiter = delimiter;
         this.maxCharsPerColumn = maxCharsPerColumn;
@@ -71,13 +71,13 @@ public class CSVStreamRDFOutput
         if (maxCharsPerColumn != null) parserSettings.setMaxCharsPerColumn(maxCharsPerColumn);
 
         CsvParser parser = new CsvParser(parserSettings);
-        parser.parse(getInputStreamReader());
-        stream.finish(); // write the statements into the stream
+        parser.parse(getReader());
+        stream.finish(); // flush the statements into the stream
     }
     
-    public InputStreamReader getInputStreamReader()
+    public Reader getReader()
     {
-        return isr;
+        return reader;
     }
     
     public String getBase()
