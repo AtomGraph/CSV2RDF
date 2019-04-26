@@ -45,42 +45,43 @@ CSV data in `parking-facilities.csv`:
 
 `CONSTRUCT` query in `parking-facilities.rq`:
 
-    PREFIX schema:     <https://schema.org/> 
-    PREFIX geo:        <http://www.w3.org/2003/01/geo/wgs84_pos#> 
-    PREFIX xsd:        <http://www.w3.org/2001/XMLSchema#> 
-    PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+```sparql
+PREFIX schema:     <https://schema.org/> 
+PREFIX geo:        <http://www.w3.org/2003/01/geo/wgs84_pos#> 
+PREFIX xsd:        <http://www.w3.org/2001/XMLSchema#> 
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-    CONSTRUCT
-    {
-        ?parking a schema:ParkingFacility ;
-            geo:lat ?lat ;
-            geo:long ?long ;
-            schema:name ?name ;
-            schema:streetAddress ?address ;
-            schema:postalCode ?postcode ;
-            schema:maximumAttendeeCapacity ?spaces ;
-            schema:additionalProperty ?parkingType ;
-            schema:comment ?information ;
-            schema:identifier ?id .
-    }
-    WHERE
-    {
-        ?parkingRow <#FID> ?id ;
-            <#name> ?name ;
-            <#address> ?address ;
-            <#lat> ?lat_string ;
-            <#postcode> ?postcode ;
-            <#parkingSpace> ?spaces_string ;
-            <#parkingType> ?parkingType ;
-            <#information> ?information ;
-            <#long> ?long_string . 
+CONSTRUCT
+{
+    ?parking a schema:ParkingFacility ;
+        geo:lat ?lat ;
+        geo:long ?long ;
+        schema:name ?name ;
+        schema:streetAddress ?address ;
+        schema:postalCode ?postcode ;
+        schema:maximumAttendeeCapacity ?spaces ;
+        schema:additionalProperty ?parkingType ;
+        schema:comment ?information ;
+        schema:identifier ?id .
+}
+WHERE
+{
+    ?parkingRow <#FID> ?id ;
+        <#name> ?name ;
+        <#address> ?address ;
+        <#lat> ?lat_string ;
+        <#postcode> ?postcode ;
+        <#parkingSpace> ?spaces_string ;
+        <#parkingType> ?parkingType ;
+        <#information> ?information ;
+        <#long> ?long_string . 
 
-        BIND(URI(CONCAT(STR(<>), ?id)) AS ?parking) # building URI from base URI and ID
-        BIND(xsd:integer(?spaces_string) AS ?spaces)
-        BIND(xsd:float(?lat_string) AS ?lat)
-        BIND(xsd:float(?long_string) AS ?long)
-    }
-
+    BIND(URI(CONCAT(STR(<>), ?id)) AS ?parking) # building URI from base URI and ID
+    BIND(xsd:integer(?spaces_string) AS ?spaces)
+    BIND(xsd:float(?lat_string) AS ?lat)
+    BIND(xsd:float(?long_string) AS ?long)
+}
+```
 Execution from shell:
 
     cat parking-facilities.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://localhost/ parking-facilities.rq > parking-facilities.ttl
