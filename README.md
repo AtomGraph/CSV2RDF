@@ -18,18 +18,24 @@ Build
 
     mvn clean install
 
-That should produce an executable JAR file `target/csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar` in which dependency libraries will be included.
+That should produce an executable JAR file `target/csv2rdf-2.0.0-SNAPSHOT-jar-with-dependencies.jar` in which dependency libraries will be included.
 
 Usage
 -----
 
-The CSV data is read from `stdin`, UTF-8 encoding is expected. The resulting RDF data is written to `stdout`.
+The CSV data is read from `stdin`, the resulting RDF data is written to `stdout`.
+
+CSV2RDF is available as a `.jar` as well as a Docker image [atomgraph/csv2rdf](https://hub.docker.com/r/atomgraph/csv2rdf) (recommended).
 
 Parameters:
-1. `baseURI` - the base URI for the data (also becomes the `BASE` URI of the SPARQL query)
-2. `queryFile` - a text file with SPARQL 1.1 [`CONSTRUCT`](https://www.w3.org/TR/sparql11-query/#construct) or [`DESCRIBE`](https://www.w3.org/TR/sparql11-query/#describe) query string
-3. `delimiter` - optional value delimiter character, by default `,`.
-4. `maxCharsPerColumn` - optional max characters per column value, by default 4096
+* `query-file` - a text file with SPARQL 1.1 [`CONSTRUCT`](https://www.w3.org/TR/sparql11-query/#construct) or [`DESCRIBE`](https://www.w3.org/TR/sparql11-query/#describe) query string
+* `base` - the base URI for the data (also becomes the `BASE` URI of the SPARQL query)
+
+Options:
+* `-d`, `--delimiter` - value delimiter character, by default `,`.
+* `--max-chars-per-column` - max characters per column value, by default 4096
+* `--input-charset` - CSV input encoding, by default UTF-8
+* `--output-charset` - RDF output encoding, by default UTF-8
 
 _Note that delimiters might have a [special meaning](https://www.tldp.org/LDP/abs/html/special-chars.html) in shell._ Therefore, always enclose them in single quotes, e.g. `';'` when executing CSV2RDF from shell.
 
@@ -82,9 +88,17 @@ WHERE
     BIND(xsd:float(?long_string) AS ?long)
 }
 ```
-Execution from shell:
+Java execution from shell:
 
-    cat parking-facilities.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://localhost/ parking-facilities.rq > parking-facilities.ttl
+    cat parking-facilities.csv | java -jar csv2rdf-2.0.0-SNAPSHOT-jar-with-dependencies.jar parking-facilities.rq https://localhost/ > parking-facilities.ttl
+
+Alternatively, Docker execution from shell:
+
+    cat parking-facilities.csv | docker run -i -a stdin -a stdout -a stderr -v "$(pwd)/parking-facilities.rq":/tmp/parking-facilities.rq atomgraph/csv2rdf /tmp/parking-facilities.rq https://localhost/ > parking-facilities.ttl
+
+Note that using Docker you need to:
+* [bind](https://docs.docker.com/engine/reference/commandline/run/#attach-to-stdinstdoutstderr--a) `stdin`/`stdout`/`stderr` when running CSV2RDF as a Docker container.
+* [mount](https://docs.docker.com/storage/volumes/) the query file to the container, and use the filepath from within the container as `query-file`
 
 Output in `parking-facilities.ttl`:
 

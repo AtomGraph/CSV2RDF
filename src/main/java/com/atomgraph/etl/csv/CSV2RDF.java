@@ -40,7 +40,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 /**
- * Main entry point to the transformation.
+ * Converts tabular CSV data to RDF triples by using SPARQL <code>CONSTRUCT</code> or <code>DESCRIBE</code> query as a transformation.
  * 
  * @author Martynas Jusevičius <martynas@atomgraph.com>
  */
@@ -104,7 +104,7 @@ public class CSV2RDF
         try (Reader reader =  new BufferedReader(new InputStreamReader(csvIn, inputCharset)))
         {
             CSVStreamRDFOutput rdfOutput = new CSVStreamRDFOutput(reader, baseURI.toString(), query, delimiter, maxCharsPerColumn);
-            Writer out = new BufferedWriter(new OutputStreamWriter(rdfOut, outputCharset)); // needed to write UTF-8 characters
+            Writer out = new BufferedWriter(new OutputStreamWriter(rdfOut, outputCharset));
             rdfOutput.write(out);
         }
     }
