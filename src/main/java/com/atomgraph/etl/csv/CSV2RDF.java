@@ -22,83 +22,89 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
 
 /**
  * Main entry point to the transformation.
  * 
  * @author Martynas Jusevičius <martynas@atomgraph.com>
  */
+@Command(name = "csv2rdf")
 public class CSV2RDF
 {
     private static final char DEFAULT_DELIMITER = ",".charAt(0);
-    
+
+    private final InputStream csvIn;
+    private final OutputStream rdfOut;
+
+    @Parameters(paramLabel = "query-file", index = "0", description = "File with SPARQL CONSTRUCT/DESCRIBE query used for the RDF transformation\nExample: mapping.rq")
+    private Path queryFile;
+
+    @Parameters(paramLabel = "base", index = "1", description = "Base URI of the RDF output data\nExample: https://localhost/")
+    private URI baseURI;
+
+    @Option(names = { "-d", "--delimiter" }, description = "Field delimiter character used in the input data (default: ${DEFAULT-VALUE})")
+    private char delimiter = DEFAULT_DELIMITER;
+
+    @Option(names = { "--input-charset" }, description = "Input charset (default: ${DEFAULT-VALUE})")
+    private Charset inputCharset = StandardCharsets.UTF_8;
+
+    @Option(names = { "--output-charset" }, description = "Output charset (default: ${DEFAULT-VALUE})")
+    private Charset outputCharset = StandardCharsets.UTF_8;
+
+    @Option(names = { "--max-chars-per-column" }, description = "Maximum number of characters allowed for any given value being written/read. Used to avoid OutOfMemoryErrors (default: 4096)")
+    private Integer maxCharsPerColumn;
+
     public static void main(String[] args) throws IOException, URISyntaxException
     {
-        InputStream csv = System.in;
-        
-        if (csv.available() == 0 || args.length < 2 || args.length > 4)
-        {
-            System.out.println("CSV input: stdin");
-            System.out.println("Parameters: <baseURI> <queryFile> [<delimiter> <maxCharsPerColumn>]");
-            System.out.println("Example: cat sample.csv | java -jar csv2rdf-1.0.0-SNAPSHOT-jar-with-dependencies.jar https://localhost/ mapping.rq > sample.ttl");
-            System.exit(1);
-        }
+        CSV2RDF csv2rdf = new CSV2RDF(System.in, System.out);
 
-        URI baseURI = new URI(args[0]);
-        Path queryPath = Paths.get(args[1]);
-        
-        char delimiter = DEFAULT_DELIMITER;
-        if (args.length > 2)
+        try
         {
-            String delimiterStr = args[2];
-            if (delimiterStr.length() > 1)
-            {
-                System.out.println("Delimiter must be a single character");
-                System.exit(1);
-            }
-            delimiter = delimiterStr.charAt(0);
+            CommandLine.ParseResult parseResult = new CommandLine(csv2rdf).parseArgs(args);
+            if (!CommandLine.printHelpIfRequested(parseResult)) csv2rdf.convert();
         }
-        
-        Integer maxCharsPerColumn = null;
-        if (args.length > 3)
-        {
-            String maxCharsPerColumnStr = args[3];
-            
-            try
-            {
-                maxCharsPerColumn = Integer.valueOf(maxCharsPerColumnStr);
-            }
-            catch (NumberFormatException ex)
-            {
-                System.out.println("Cannot parse '" + maxCharsPerColumnStr + "' as an integer");
-                System.exit(1);
-            }
+        catch (CommandLine.ParameterException ex)
+        { // command line arguments could not be parsed
+            System.err.println(ex.getMessage());
+            ex.getCommandLine().usage(System.err);
         }
+    }
+    
+    public CSV2RDF(InputStream csvIn, OutputStream rdfOut)
+    {
+        this.csvIn = csvIn;
+        this.rdfOut = rdfOut;
+    }
+    
+    public void convert() throws IOException
+    {
+        if (csvIn.available() == 0) throw new IllegalStateException("CSV input not provided");
         
-        byte[] encoded = Files.readAllBytes(queryPath);
+        byte[] encoded = Files.readAllBytes(queryFile);
         String queryString = new String(encoded, StandardCharsets.UTF_8);
         Query query = QueryFactory.create(queryString, baseURI.toString());
-        if (!(query.isConstructType() || query.isDescribeType()))
-        {
-            System.out.println("Only CONSTRUCT or DESCRIBE queries are supported");
-            System.exit(1);
-        }
+        if (!(query.isConstructType() || query.isDescribeType())) throw new IllegalStateException("Only CONSTRUCT or DESCRIBE queries are supported");
 
-        try (Reader reader =  new BufferedReader(new InputStreamReader(csv, StandardCharsets.UTF_8)))
+        try (Reader reader =  new BufferedReader(new InputStreamReader(csvIn, inputCharset)))
         {
             CSVStreamRDFOutput rdfOutput = new CSVStreamRDFOutput(reader, baseURI.toString(), query, delimiter, maxCharsPerColumn);
-            Writer out = new BufferedWriter(new OutputStreamWriter(System.out)); // needed to write UTF-8 characters
+            Writer out = new BufferedWriter(new OutputStreamWriter(rdfOut, outputCharset)); // needed to write UTF-8 characters
             rdfOutput.write(out);
         }
     }
