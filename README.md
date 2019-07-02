@@ -98,7 +98,7 @@ Alternatively, Docker execution from shell:
 
 Note that using Docker you need to:
 * [bind](https://docs.docker.com/engine/reference/commandline/run/#attach-to-stdinstdoutstderr--a) `stdin`/`stdout`/`stderr` when running CSV2RDF as a Docker container.
-* [mount](https://docs.docker.com/storage/volumes/) the query file to the container, and use the filepath from within the container as `query-file`
+* [mount](https://docs.docker.com/storage/volumes/) the query file to the container, and use the filepath from _within the container_ as `query-file`
 
 Output in `parking-facilities.ttl`:
 
