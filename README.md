@@ -28,7 +28,7 @@ The CSV data is read from `stdin`, the resulting RDF data is written to `stdout`
 CSV2RDF is available as a `.jar` as well as a Docker image [atomgraph/csv2rdf](https://hub.docker.com/r/atomgraph/csv2rdf) (recommended).
 
 Parameters:
-* `query-file` - a text file with SPARQL 1.1 [`CONSTRUCT`](https://www.w3.org/TR/sparql11-query/#construct) or [`DESCRIBE`](https://www.w3.org/TR/sparql11-query/#describe) query string
+* `query-file` - a text file with SPARQL 1.1 [`CONSTRUCT`](https://www.w3.org/TR/sparql11-query/#construct) query string
 * `base` - the base URI for the data (also becomes the `BASE` URI of the SPARQL query)
 
 Options:
@@ -128,3 +128,4 @@ Dependencies
 
 * [Apache Jena](https://jena.apache.org/)
 * [uniVocity-parsers](https://www.univocity.com/pages/univocity_parsers_tutorial)
+* [picocli](https://picocli.info)

@@ -99,7 +99,7 @@ public class CSV2RDF
         byte[] encoded = Files.readAllBytes(queryFile);
         String queryString = new String(encoded, StandardCharsets.UTF_8);
         Query query = QueryFactory.create(queryString, baseURI.toString());
-        if (!(query.isConstructType() || query.isDescribeType())) throw new IllegalStateException("Only CONSTRUCT or DESCRIBE queries are supported");
+        if (!(query.isConstructType())) throw new IllegalStateException("Only CONSTRUCT queries are supported");
 
         try (Reader reader =  new BufferedReader(new InputStreamReader(csvIn, inputCharset)))
         {
