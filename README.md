@@ -29,7 +29,7 @@ CSV2RDF is available as a `.jar` as well as a Docker image [atomgraph/csv2rdf](h
 
 Parameters:
 * `query-file` - a text file with SPARQL 1.1 [`CONSTRUCT`](https://www.w3.org/TR/sparql11-query/#construct) query string
-* `base` - the base URI for the data (also becomes the `BASE` URI of the SPARQL query)
+* `base` - the base URI for the data (also becomes the `BASE` URI of the SPARQL query). Property namespace is constructed by adding `#` to the base URI.
 
 Options:
 * `-d`, `--delimiter` - value delimiter character, by default `,`.
@@ -97,7 +97,7 @@ Alternatively, Docker execution from shell:
     cat parking-facilities.csv | docker run -i -a stdin -a stdout -a stderr -v "$(pwd)/parking-facilities.rq":/tmp/parking-facilities.rq atomgraph/csv2rdf /tmp/parking-facilities.rq https://localhost/ > parking-facilities.ttl
 
 Note that using Docker you need to:
-* [bind](https://docs.docker.com/engine/reference/commandline/run/#attach-to-stdinstdoutstderr--a) `stdin`/`stdout`/`stderr` when running CSV2RDF as a Docker container.
+* [bind](https://docs.docker.com/engine/reference/commandline/run/#attach-to-stdinstdoutstderr--a) `stdin`/`stdout`/`stderr` streams
 * [mount](https://docs.docker.com/storage/volumes/) the query file to the container, and use the filepath from _within the container_ as `query-file`
 
 Output in `parking-facilities.ttl`:
