@@ -18,7 +18,7 @@ Build
 
     mvn clean install
 
-That should produce an executable JAR file `target/csv2rdf-2.0.0-SNAPSHOT-jar-with-dependencies.jar` in which dependency libraries will be included.
+That should produce an executable JAR file `target/csv2rdf-2.0.0-jar-with-dependencies.jar` in which dependency libraries will be included.
 
 Usage
 -----
@@ -90,7 +90,7 @@ WHERE
 ```
 Java execution from shell:
 
-    cat parking-facilities.csv | java -jar csv2rdf-2.0.0-SNAPSHOT-jar-with-dependencies.jar parking-facilities.rq https://localhost/ > parking-facilities.ttl
+    cat parking-facilities.csv | java -jar csv2rdf-2.0.0-jar-with-dependencies.jar parking-facilities.rq https://localhost/ > parking-facilities.ttl
 
 Alternatively, Docker execution from shell:
 
