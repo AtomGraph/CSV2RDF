@@ -26,8 +26,8 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.riot.system.StreamOps;
 import org.apache.jena.riot.system.StreamRDF;
+import org.apache.jena.riot.system.StreamRDFOps;
 
 /**
  * Converts an array of values to generic RDF, transforms it with a query and sends the result triples to stream.
@@ -79,7 +79,7 @@ public class CSVStreamRDFProcessor implements RowProcessor
         }
 
         rowModel = getFunction().apply(getQuery(), rowModel); // transform row
-        StreamOps.sendTriplesToStream(rowModel.getGraph(), getStreamRDF()); // send the transformed RDF to the stream
+        StreamRDFOps.sendTriplesToStream(rowModel.getGraph(), getStreamRDF()); // send the transformed RDF to the stream
     }
 
     @Override

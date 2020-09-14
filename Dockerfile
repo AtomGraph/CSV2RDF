@@ -10,4 +10,4 @@ RUN mvn clean install
 
 ### entrypoint
 
-ENTRYPOINT ["java", "-jar", "target/csv2rdf-2.0.0-SNAPSHOT-jar-with-dependencies.jar"]
+ENTRYPOINT ["java", "-jar", "target/csv2rdf-jar-with-dependencies.jar"]
