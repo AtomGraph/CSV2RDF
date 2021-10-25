@@ -32,7 +32,7 @@ import org.apache.jena.riot.system.StreamRDFOps;
 /**
  * Converts an array of values to generic RDF, transforms it with a query and sends the result triples to stream.
  * 
- * @author Martynas Jusevičius <martynas@atomgraph.com>
+ * @author Martynas Jusevičius {@literal <martynas@atomgraph.com>}
  */
 public class CSVStreamRDFProcessor implements RowProcessor
 {
@@ -61,6 +61,12 @@ public class CSVStreamRDFProcessor implements RowProcessor
     @Override
     public void rowProcessed(String[] row, ParsingContext context)
     {
+        Model rowModel = transformRow(row, context);
+        StreamRDFOps.sendTriplesToStream(rowModel.getGraph(), getStreamRDF()); // send the transformed RDF to the stream
+    }
+
+    public Model transformRow(String[] row, ParsingContext context)
+    {
         Model rowModel = ModelFactory.createDefaultModel();
         Resource subject = rowModel.createResource();
         subjectCount++;
@@ -78,10 +84,9 @@ public class CSVStreamRDFProcessor implements RowProcessor
             cellNo++;
         }
 
-        rowModel = getFunction().apply(getQuery(), rowModel); // transform row
-        StreamRDFOps.sendTriplesToStream(rowModel.getGraph(), getStreamRDF()); // send the transformed RDF to the stream
+        return getFunction().apply(getQuery(), rowModel); // transform row
     }
-
+    
     @Override
     public void processEnded(ParsingContext context)
     {
