@@ -25,7 +25,7 @@ import org.apache.jena.rdf.model.Model;
 /**
  * Transforms an RDF graph using a SPARQL query.
  * 
- * @author Martynas Jusevičius <martynas@atomgraph.com>
+ * @author Martynas Jusevičius {@literal <martynas@atomgraph.com>}
  */
 public class ModelTransformer implements BiFunction<Query, Model, Model>
 {

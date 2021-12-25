@@ -28,7 +28,7 @@ import org.apache.jena.riot.system.StreamRDFLib;
 /**
  * Reads CSV data from input stream, transforms it into RDF and writes the result.
  * 
- * @author Martynas Jusevičius <martynas@atomgraph.com>
+ * @author Martynas Jusevičius {@literal <martynas@atomgraph.com>}
  */
 public class CSVStreamRDFOutput
 {
@@ -95,7 +95,7 @@ public class CSVStreamRDFOutput
         return delimiter;
     }
     
-    public int getMaxCharsPerColumn()
+    public Integer getMaxCharsPerColumn()
     {
         return maxCharsPerColumn;
     }

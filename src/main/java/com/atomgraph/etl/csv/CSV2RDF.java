@@ -42,7 +42,7 @@ import picocli.CommandLine.Parameters;
 /**
  * Converts tabular CSV data to RDF triples by using SPARQL <code>CONSTRUCT</code> or <code>DESCRIBE</code> query as a transformation.
  * 
- * @author Martynas Jusevičius <martynas@atomgraph.com>
+ * @author Martynas Jusevičius {@literal <martynas@atomgraph.com>}
  */
 @Command(name = "csv2rdf")
 public class CSV2RDF
