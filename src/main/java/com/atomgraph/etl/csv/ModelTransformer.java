@@ -19,7 +19,6 @@ package com.atomgraph.etl.csv;
 import java.util.function.BiFunction;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.rdf.model.Model;
 
 /**
@@ -34,7 +33,7 @@ public class ModelTransformer implements BiFunction<Query, Model, Model>
     public Model apply(Query construct, Model model)
     {
         // execute CONSTRUCT to map from CSV/RDF to domain RDF vocab
-        try (QueryExecution qex = QueryExecutionFactory.create(construct, model))
+        try (QueryExecution qex = QueryExecution.create(construct, model))
         {
             return qex.execConstruct();
         }
