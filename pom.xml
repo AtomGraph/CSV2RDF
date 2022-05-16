@@ -4,7 +4,7 @@
     
     <groupId>com.atomgraph.etl.csv</groupId>
     <artifactId>csv2rdf</artifactId>
-    <version>2.1.8-SNAPSHOT</version>
+    <version>2.1.9-SNAPSHOT</version>
     <packaging>jar</packaging>
     
     <name>CSV2RDF</name>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-arq</artifactId>
-            <version>4.3.2</version>
+            <version>4.5.0</version>
             <exclusions>
                 <!-- exclude HTTP Client as its version clashes with Jersey's -->
                 <exclusion>
