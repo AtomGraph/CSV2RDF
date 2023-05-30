@@ -116,7 +116,7 @@ Output in `parking-facilities.ttl`:
 Query examples
 --------------
 
-More mapping query examples can be found under [LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub)'s [`city-graph`](https://github.com/AtomGraph/LinkedDataHub-Apps/tree/master/demo/city-graph/queries) demo app.
+More mapping query examples can be found under [LinkedDataHub](https://github.com/AtomGraph/LinkedDataHub)'s [`northwind-traders`](https://github.com/AtomGraph/LinkedDataHub-Apps/tree/master/demo/northwind-traders/queries/imports) demo app.
 
 Performance
 -----------
