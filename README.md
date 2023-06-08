@@ -94,7 +94,7 @@ Java execution from shell:
 
 Alternatively, Docker execution from shell:
 
-    cat parking-facilities.csv | docker run -i -a stdin -a stdout -a stderr -v "$(pwd)/parking-facilities.rq":/tmp/parking-facilities.rq atomgraph/csv2rdf /tmp/parking-facilities.rq https://localhost/ > parking-facilities.ttl
+    cat parking-facilities.csv | docker run -rm -i -a stdin -a stdout -a stderr -v "$(pwd)/parking-facilities.rq":/tmp/parking-facilities.rq atomgraph/csv2rdf /tmp/parking-facilities.rq https://localhost/ > parking-facilities.ttl
 
 Note that using Docker you need to:
 * [bind](https://docs.docker.com/engine/reference/commandline/run/#attach-to-stdinstdoutstderr--a) `stdin`/`stdout`/`stderr` streams
