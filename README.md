@@ -20,6 +20,11 @@ Build
 
 That should produce an executable JAR file `target/csv2rdf-2.0.0-jar-with-dependencies.jar` in which dependency libraries will be included.
 
+Maven
+-----
+
+Each version is released to the Maven central repository as [`com.atomgraph.etl.csv/csv2rdf`](https://central.sonatype.com/artifact/com.atomgraph.etl.csv/csv2rdf)
+
 Usage
 -----
 
