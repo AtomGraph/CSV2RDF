@@ -1,13 +1,20 @@
-FROM maven:3.6.0-jdk-8
+# Built from the sources at the tag being released; the image is the CLI, called as `docker run -i atomgraph/csv2rdf
+# <query-file> <base>` with the CSV on standard input and the RDF on standard output.
 
-LABEL maintainer="martynas@atomgraph.com"
-
-COPY . /usr/src/CSV2RDF
+FROM maven:3.9.11-eclipse-temurin-21 AS build
 
 WORKDIR /usr/src/CSV2RDF
 
-RUN mvn clean install
+COPY pom.xml .
+RUN mvn -B -q dependency:go-offline
 
-### entrypoint
+COPY src src
+RUN mvn -B clean package
 
-ENTRYPOINT ["java", "-jar", "target/csv2rdf-jar-with-dependencies.jar"]
+FROM eclipse-temurin:21-jre
+
+LABEL maintainer="martynas@atomgraph.com"
+
+COPY --from=build /usr/src/CSV2RDF/target/csv2rdf-*-jar-with-dependencies.jar /usr/local/lib/csv2rdf.jar
+
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/csv2rdf.jar"]
